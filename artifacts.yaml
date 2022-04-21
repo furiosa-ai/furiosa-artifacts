@@ -1,26 +1,38 @@
 artifacts:
-  - name: mlcommons_resnet50
+  # Image Classification
+  - name: MLCommonsResNet50
     family: ResNet
     version: v1.1
-    location: furiosa/artifacts/vision/artifacts.py
+    location: furiosa/artifacts/artifacts.py
     format: code
     metadata:
       description: ResNet50 v1.5 model for MLCommons v1.1
       publication:
         url: https://arxiv.org/abs/1512.03385.pdf
-  - name: mlcommons_ssd_mobilenet
+  - name: EfficientNetV2_S
+    family: EfficientNet
+    version: v2.0
+    location: furiosa/artifacts/artifacts.py
+    format: code
+    metadata:
+      description: EfficientNetV2 from Google AutoML (https://github.com/google/automl/tree/master/efficientnetv2)
+      publication:
+        url: https://arxiv.org/abs/2104.00298
+
+  # Object detection
+  - name: MLCommonsSSDMobileNet
     family: MobileNetV1
     version: v1.1
-    location: furiosa/artifacts/vision/artifacts.py
+    location: furiosa/artifacts/artifacts.py
     format: code
     metadata:
       description: MobileNet v1 model for MLCommons v1.1
       publication:
         url: https://arxiv.org/abs/1704.04861.pdf
-  - name: mlcommons_ssd_resnet34
+  - name: MLCommonsSSDResNet34
     family: ResNet
     version: v1.1
-    location: furiosa/artifacts/vision/artifacts.py
+    location: furiosa/artifacts/artifacts.py
     format: code
     metadata:
       description: ResNet34 model for MLCommons v1.1
