@@ -62,3 +62,14 @@ class EfficientNetV2_S(EfficientNetModelGenerator):
         has_pretrained,
     ) = EfficientNetModelGenerator.configer(config_key)
     arxiv = "https://arxiv.org/abs/2104.00298"
+
+
+class EfficientNetV2_M(EfficientNetV2_S):
+    model_name = "efficientnetv2_m"
+    config_key = "tf_efficientnetv2_m"
+    (
+        model_config,
+        model_func,
+        input_shape,
+        has_pretrained,
+    ) = EfficientNetModelGenerator.configer(config_key)

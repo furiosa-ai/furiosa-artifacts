@@ -18,6 +18,15 @@ artifacts:
       description: EfficientNetV2 from Google AutoML (https://github.com/google/automl/tree/master/efficientnetv2)
       publication:
         url: https://arxiv.org/abs/2104.00298
+  - name: EfficientNetV2_M
+    family: EfficientNet
+    version: v2.0
+    location: furiosa/artifacts/artifacts.py
+    format: code
+    metadata:
+      description: EfficientNetV2 from Google AutoML (https://github.com/google/automl/tree/master/efficientnetv2)
+      publication:
+        url: https://arxiv.org/abs/2104.00298
 
   # Object detection
   - name: MLCommonsSSDMobileNet

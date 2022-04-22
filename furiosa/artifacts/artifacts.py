@@ -5,6 +5,9 @@ from furiosa.registry import Model
 from furiosa.registry.client.transport import FileTransport
 
 from .vision.models.image_classification import (
+    EfficientNetV2_M as EfficientNetV2_MModel,
+)
+from .vision.models.image_classification import (
     EfficientNetV2_S as EfficientNetV2_SModel,
 )
 from .vision.models.mlcommons.common.datasets import coco, dataset
@@ -52,6 +55,14 @@ async def EfficientNetV2_S(*args: Any, **kwargs: Any) -> Model:
     return Model(
         name="EfficientNetV2_S",
         model=EfficientNetV2_SModel().export(io.BytesIO()).getvalue(),
+        **kwargs,
+    )
+
+
+async def EfficientNetV2_M(*args: Any, **kwargs: Any) -> Model:
+    return Model(
+        name="EfficientNetV2_M",
+        model=EfficientNetV2_MModel().export(io.BytesIO()).getvalue(),
         **kwargs,
     )
 
