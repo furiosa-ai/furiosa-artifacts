@@ -11,6 +11,7 @@ Model | Python class name | Pretrained? |
 :------------ | :-------------|:-------------:|
 | ResNet50-v1.5 | `MLCommonsResNet50` | :heavy_check_mark: |
 | EfficientNetV2_S | `EfficientNetV2_S` | :heavy_check_mark: |
+| EfficientNetV2_M | `EfficientNetV2_M` | :heavy_check_mark: |
 
 ### Object detection
 
