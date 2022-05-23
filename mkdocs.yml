@@ -14,6 +14,7 @@ nav:
   - Publishing models: usage/publishing.md
   - Loading models: usage/loading.md
   - Running models: usage/running.md
+  - Example notebook: examples/notebooks/HowToUseFuriosaModels.ipynb
 - Available models: models.md
 - Model description:
   - Vision:
@@ -33,3 +34,6 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+
+plugins:
+  - mkdocs-jupyter
