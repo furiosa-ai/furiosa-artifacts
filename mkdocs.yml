@@ -14,7 +14,6 @@ nav:
   - Publishing models: usage/publishing.md
   - Loading models: usage/loading.md
   - Running models: usage/running.md
-  - Example notebook: examples/notebooks/HowToUseFuriosaModels.ipynb
 - Available models: models.md
 - Model description:
   - Vision:
@@ -25,6 +24,7 @@ nav:
     - Object detection:
         - SSD ResNet34: 'models/ssd_resnet34.md'
         - SSD MobileNet v1: 'models/ssd_mobilenet_v1.md'
+- End-to-end example: examples/notebooks/EndToEndExample.ipynb
 
 - changelog.md
 
