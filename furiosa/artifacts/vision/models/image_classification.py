@@ -1,10 +1,18 @@
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
+import cv2
+import numpy as np
 import timm
 from furiosa.registry import Model
+from furiosa.runtime import tensor
 
 from .common.base import ImageNetRwightman
-from .mlcommons.common.datasets import dataset
+from .mlcommons.common.utils import mixin
+from .mlcommons.common.datasets import imagenet1k
+
+
+class SessionBaseModel(Model):
+    sess: Optional[Any] = None
 
 
 def call_model_generator(parent_class) -> Callable:
@@ -81,11 +89,62 @@ class EfficientNetV2_M(EfficientNetV2_S):
     ) = EfficientNetModelGenerator.configer(config_key)
 
 
-class MLCommonsResNet50Model(Model):
+class MLCommonsResNet50Model(mixin.SessionMixin, SessionBaseModel):
     """MLCommons ResNet50 model"""
 
-    def preprocess(self, *args: Any, **kwargs: Any) -> Any:
-        return dataset.pre_process_vgg(*args, **kwargs)
+    idx2str: List[str] = imagenet1k.ImageNet1k_Idx2Str
 
-    def postprocess(self, *args: Any, **kwargs: Any) -> Any:
-        return dataset.PostProcessArgMax(offset=0)(*args, **kwargs)
+    def center_crop(
+        self, image: np.ndarray, cropped_height: int, cropped_width: int
+    ) -> np.ndarray:
+        """Centrally crop `image` into cropped_width x cropped_height."""
+        height, width, _ = image.shape
+        top = int((height - cropped_height) / 2)
+        bottom = int((height + cropped_height) / 2)
+        left = int((width - cropped_width) / 2)
+        right = int((width + cropped_width) / 2)
+        image = image[top:bottom, left:right]
+        return image
+
+    def resize_with_aspect_ratio(
+        self,
+        image: np.ndarray,
+        scaled_height: int,
+        scaled_width: int,
+        percent: float,
+        interpolation: int,
+    ) -> np.ndarray:
+        """Resize `image` so that it will be of scaled_width x scaled_height if it is scaled by `percent`."""
+        height, width, _ = image.shape
+        new_height = int(100.0 * scaled_height / percent)
+        new_width = int(100.0 * scaled_width / percent)
+        if height > width:
+            new_height = int(new_height * height / width)
+        else:
+            new_width = int(new_width * width / height)
+        image = cv2.resize(image, (new_width, new_height), interpolation=interpolation)
+        return image
+
+    def preprocess(self, image_path: str) -> tensor.TensorArray:
+        """Read and preprocess an image located at image_path."""
+        image = cv2.imread(image_path)
+        if image is None:
+            raise FileNotFoundError(image_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = self.resize_with_aspect_ratio(
+            image, 224, 224, percent=87.5, interpolation=cv2.INTER_AREA
+        )
+        image = self.center_crop(image, 224, 224)
+        image = np.asarray(image, dtype=np.float32)
+        image -= np.array([123.68, 116.78, 103.94], dtype=np.float32)
+        image = image.transpose([2, 0, 1])
+        return image[np.newaxis, ...]
+
+    def postprocess(self, output: np.ndarray) -> str:
+        return self.idx2str[int(output[0].numpy()) - 1]
+
+    def inference(self, image: np.array) -> np.array:
+        return self.sess.run(image)
+
+    def __call__(self, image_path: str) -> Dict[int, str]:
+        return self.postprocess(self.inference(self.preprocess(image_path)))
