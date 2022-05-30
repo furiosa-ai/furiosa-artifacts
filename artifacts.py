@@ -3,7 +3,7 @@ from typing import Any
 
 import dvc.api
 from furiosa.registry import Format, Metadata, Model, Publication
-from furiosa.registry.client.transport import FileTransport
+from furiosa.registry.client.transport import download, FileTransport
 
 from furiosa.artifacts.vision.models.image_classification import (
     EfficientNetV2_M as EfficientNetV2_MModel,
@@ -17,16 +17,18 @@ from furiosa.artifacts.vision.models.object_detection import (
     MLCommonsSSDSmallModel,
 )
 
+loader = FileTransport()
 
-def load_dvc(uri: str):
-    return dvc.api.read(uri, mode='rb', repo='https://github.com/furiosa-ai/furiosa-artifacts', rev='fp/mlcommns_resnet50_v1.5_int8')
+def load_dvc(uri: str, mode: str='r'):
+    return dvc.api.read(uri, mode=mode)
 
 
 # Image classification
 async def MLCommonsResNet50(*args: Any, **kwargs: Any) -> MLCommonsResNet50Model:
     return MLCommonsResNet50Model(
         name="MLCommonsResNet50",
-        model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx"),
+        model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx", mode='rb'),
+        #model=await download('s3://furiosa-public-artifacts/furiosa-artifacts/9c/2e36795539d84e789f3f5ed42a917b'),
         # model=load_dvc(
         #    "s3://furiosa-public-artifacts/furiosa-artifacts/9c/2e36795539d84e789f3f5ed42a917b"
         # ),
