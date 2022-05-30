@@ -28,10 +28,6 @@ async def MLCommonsResNet50(*args: Any, **kwargs: Any) -> MLCommonsResNet50Model
     return MLCommonsResNet50Model(
         name="MLCommonsResNet50",
         model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx", mode='rb'),
-        #model=await download('s3://furiosa-public-artifacts/furiosa-artifacts/9c/2e36795539d84e789f3f5ed42a917b'),
-        # model=load_dvc(
-        #    "s3://furiosa-public-artifacts/furiosa-artifacts/9c/2e36795539d84e789f3f5ed42a917b"
-        # ),
         format=Format.ONNX,
         family="ResNet",
         version="v1.5",
