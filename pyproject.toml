@@ -26,6 +26,7 @@ dynamic = ["description"]
 requires-python = "~=3.7"
 dependencies = [
     "furiosa-registry ~= 0.6.3",
+    "furiosa-runtime ~= 0.6.3",
     "onnx",
     "onnxruntime",
     "opencv-python",
