@@ -28,7 +28,7 @@ def load_dvc(uri: str, mode: str = "r"):
 async def MLCommonsResNet50(*args: Any, **kwargs: Any) -> MLCommonsResNet50Model:
     return MLCommonsResNet50Model(
         name="MLCommonsResNet50",
-        model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx", mode="rb"),
+        model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx.dvc"),
         format=Format.ONNX,
         family="ResNet",
         version="v1.5",
