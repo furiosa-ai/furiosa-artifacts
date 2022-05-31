@@ -1,5 +1,5 @@
 import io
-from typing import Any, Callable, Optional, Tuple, TypeVar, Union
+from typing import Callable, Optional, Tuple, TypeVar, Union
 
 import numpy as np
 import onnx
