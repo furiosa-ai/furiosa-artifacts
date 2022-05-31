@@ -121,6 +121,8 @@ class MLCommonsResNet50Model(Model):
 
     def preprocess(self, image_path: str) -> np.array:
         """Read and preprocess an image located at image_path."""
+        # https://github.com/mlcommons/inference/blob/af7f5a0b856402b9f461002cfcad116736a8f8af/vision/classification_and_detection/python/main.py#L37-L39
+        # https://github.com/mlcommons/inference/blob/af7f5a0b856402b9f461002cfcad116736a8f8af/vision/classification_and_detection/python/dataset.py#L168-L184
         image = cv2.imread(image_path)
         if image is None:
             raise FileNotFoundError(image_path)
@@ -130,6 +132,7 @@ class MLCommonsResNet50Model(Model):
         )
         image = self.center_crop(image, 224, 224)
         image = np.asarray(image, dtype=np.float32)
+        # https://github.com/mlcommons/inference/blob/af7f5a0b856402b9f461002cfcad116736a8f8af/vision/classification_and_detection/python/dataset.py#L178
         image -= np.array([123.68, 116.78, 103.94], dtype=np.float32)
         image = image.transpose([2, 0, 1])
         return image[np.newaxis, ...]
