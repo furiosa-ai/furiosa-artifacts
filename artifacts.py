@@ -3,7 +3,7 @@ from typing import Any
 
 import dvc.api
 from furiosa.registry import Format, Metadata, Model, Publication
-from furiosa.registry.client.transport import download, FileTransport
+from furiosa.registry.client.transport import FileTransport
 
 from furiosa.artifacts.vision.models.image_classification import (
     EfficientNetV2_M as EfficientNetV2_MModel,
@@ -19,7 +19,8 @@ from furiosa.artifacts.vision.models.object_detection import (
 
 loader = FileTransport()
 
-def load_dvc(uri: str, mode: str='r'):
+
+def load_dvc(uri: str, mode: str = "r"):
     return dvc.api.read(uri, mode=mode)
 
 
@@ -27,7 +28,7 @@ def load_dvc(uri: str, mode: str='r'):
 async def MLCommonsResNet50(*args: Any, **kwargs: Any) -> MLCommonsResNet50Model:
     return MLCommonsResNet50Model(
         name="MLCommonsResNet50",
-        model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx", mode='rb'),
+        model=load_dvc("models/mlcommons_resnet50_v1.5_int8.onnx", mode="rb"),
         format=Format.ONNX,
         family="ResNet",
         version="v1.5",
