@@ -17,9 +17,6 @@ from furiosa.artifacts.vision.models.object_detection import (
     MLCommonsSSDSmallModel,
 )
 
-loader = FileTransport()
-
-
 def load_dvc(uri: str, mode: str = "r"):
     return dvc.api.read(uri, mode=mode)
 
