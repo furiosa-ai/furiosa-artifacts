@@ -4,15 +4,9 @@ import cv2
 import numpy as np
 import timm
 from furiosa.registry import Model
-from furiosa.runtime import tensor
 
 from .common.base import ImageNetRwightman
-from .mlcommons.common.utils import mixin
 from .mlcommons.common.datasets import imagenet1k
-
-
-class SessionBaseModel(Model):
-    sess: Optional[Any] = None
 
 
 def call_model_generator(parent_class) -> Callable:
@@ -89,7 +83,7 @@ class EfficientNetV2_M(EfficientNetV2_S):
     ) = EfficientNetModelGenerator.configer(config_key)
 
 
-class MLCommonsResNet50Model(mixin.SessionMixin, SessionBaseModel):
+class MLCommonsResNet50Model(Model):
     """MLCommons ResNet50 model"""
 
     idx2str: List[str] = imagenet1k.ImageNet1k_Idx2Str
@@ -125,7 +119,7 @@ class MLCommonsResNet50Model(mixin.SessionMixin, SessionBaseModel):
         image = cv2.resize(image, (new_width, new_height), interpolation=interpolation)
         return image
 
-    def preprocess(self, image_path: str) -> tensor.TensorArray:
+    def preprocess(self, image_path: str) -> np.array:
         """Read and preprocess an image located at image_path."""
         image = cv2.imread(image_path)
         if image is None:
@@ -140,11 +134,6 @@ class MLCommonsResNet50Model(mixin.SessionMixin, SessionBaseModel):
         image = image.transpose([2, 0, 1])
         return image[np.newaxis, ...]
 
-    def postprocess(self, output: np.ndarray) -> str:
+    def postprocess(self, output: Any) -> str:
         return self.idx2str[int(output[0].numpy()) - 1]
 
-    def inference(self, image: np.array) -> np.array:
-        return self.sess.run(image)
-
-    def __call__(self, image_path: str) -> Dict[int, str]:
-        return self.postprocess(self.inference(self.preprocess(image_path)))
