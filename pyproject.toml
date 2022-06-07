@@ -25,7 +25,7 @@ classifiers = [
 dynamic = ["description"]
 requires-python = "~=3.7"
 dependencies = [
-    "furiosa-registry ~= 0.6.3",
+    "furiosa-registry",
     "onnx",
     "onnxruntime",
     "opencv-python",
