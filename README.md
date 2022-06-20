@@ -14,13 +14,11 @@ pip install furiosa-models
 ## Example
 
 ```python
-import asyncio
-
 from furiosa.registry import Model
 from furiosa.models.vision import MLCommonsResNet50
 
 
-model: Model = asyncio.run(MLCommonsResNet50())
+model: Model = MLCommonsResNet50()
 ```
 
 ## License

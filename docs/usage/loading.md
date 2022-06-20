@@ -4,8 +4,17 @@ You can load models provided by Furiosa Artifacts using [furiosa-models](https:/
 
 ## Example
 
+### Blocking and Non-Blocking API
+Furiosa Model offers both blocking and non-blocking API for fetching models.
+
+#### Blocking example
 ```python
 --8<-- "docs/examples/loading_model.py"
+```
+
+#### Non-blocking example
+```python
+--8<-- "docs/examples/loading_model_nonblocking.py"
 ```
 
 What's going on here:
@@ -14,10 +23,12 @@ What's going on here:
 
 Create model instance. This function ultimately calls the function entrypoint which provided by `artifacts.py` in `furiosa-artifacts`
 
-`pretrained=True` is an arbitrary argument which will transparently pass to model init. You can see what arguments are defined in the model class.
+`pretrained=True` is an arbitrary argument that will transparently pass to model initialization. You can see what arguments are defined in the model class.
 
 ---
 
+For non-blocking example
+
 `asyncio.run()`
 
-Function entrypoints provided by Furiosa Artifacts are async by default to support concurrency to load models. You need to call the entrypoints in async functions or async eventloop.
+Function entrypoints in `furiosa.models.nonblocking` are async to support concurrency in loading models. You need to call the entrypoints in async functions or async eventloop.
