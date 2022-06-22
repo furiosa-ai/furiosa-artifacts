@@ -23,7 +23,7 @@ What's going on here:
 
 Create model instance. This function ultimately calls the function entrypoint which provided by `artifacts.py` in `furiosa-artifacts`
 
-`pretrained=True` is an arbitrary argument that will transparently pass to model initialization. You can see what arguments are defined in the model class.
+If `pretrained=True` is set, a model with pre-trained weights will be fetched. `pretrained=True` is a default option as well as the only-allowed option for now. You can also find more arguments in the model class.
 
 ---
 
@@ -31,4 +31,4 @@ For non-blocking example
 
 `asyncio.run()`
 
-Function entrypoints in `furiosa.models.nonblocking` are async to support concurrency in loading models. You need to call the entrypoints in async functions or async eventloop.
+`furiosa.models.nonblocking` module offers non-blocking API. When you are wrting codes using furiosa-models in async functions or async eventloop, you should use the non-blocking APIs.

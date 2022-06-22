@@ -19,6 +19,7 @@ from furiosa.models.vision import MLCommonsResNet50
 
 
 model: Model = MLCommonsResNet50()
+...
 ```
 
 ## License
