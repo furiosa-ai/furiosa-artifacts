@@ -31,4 +31,4 @@ For non-blocking example
 
 `asyncio.run()`
 
-`furiosa.models.nonblocking` module offers non-blocking API. When you are wrting codes using furiosa-models in async functions or async eventloop, you should use the non-blocking APIs.
+`furiosa.models.nonblocking` module offers non-blocking API. When you are writing codes using furiosa-models in async functions or async eventloop, you should use the non-blocking APIs.
