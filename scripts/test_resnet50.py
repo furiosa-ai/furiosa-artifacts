@@ -14,4 +14,4 @@ async def test_mlcommons_resnet50_perf():
 
     with InferenceTestSessionWrapper(m) as sess:
         result = sess.inference(test_image_path)
-        assert result == 'tabby, tabby cat', "check your result"
+        assert result == "tabby, tabby cat", "check your result"
