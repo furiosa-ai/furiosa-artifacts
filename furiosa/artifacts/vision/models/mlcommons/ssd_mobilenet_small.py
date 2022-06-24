@@ -43,12 +43,12 @@ class SSDSmallConstant(object):
 
 
 class MLCommonsSSDSmallModel(Model):
+    """MLCommons MobileNet v1 model"""
+    # https://github.com/mlcommons/inference/blob/de6497f9d64b85668f2ab9c26c9e3889a7be257b/tools/submission/submission-checker.py#L467
+
     @property
     def classes(self):
         return coco.MobileNetSSD_CLASSES
-
-    """MLCommons MobileNet v1 model"""
-    # https://github.com/mlcommons/inference/blob/de6497f9d64b85668f2ab9c26c9e3889a7be257b/tools/submission/submission-checker.py#L467
 
     def preprocess(self, image_path: str) -> Tuple[npt.ArrayLike, Dict[str, Any]]:
         """Read and preprocess an image located at image_path."""
