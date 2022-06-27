@@ -10,6 +10,7 @@ from furiosa.artifacts.vision.models.object_detection import (
     MLCommonsSSDLargeModel,
     MLCommonsSSDSmallModel,
     YoloV5LargeModel,
+    YoloV5MediumModel,
 )
 from furiosa.registry import Format, Metadata, Publication
 
@@ -93,6 +94,33 @@ async def YoloV5Large(*args: Any, **kwargs: Any) -> YoloV5LargeModel:
         version="v5",
         metadata=Metadata(
             description="Yolo v5 large model",
+            publication=Publication(url="https://github.com/ultralytics/yolov5"),
+        ),
+        compiler_config={
+            "without_quantize": {
+                "parameters": [
+                    {
+                        "input_min": 0.0,
+                        "input_max": 1.0,
+                        "permute": [0, 2, 3, 1],  # "HWC" to "CHW"
+                    }
+                ]
+            },
+        },
+        *args,
+        **kwargs,
+    )
+
+
+async def YoloV5Medium(*args: Any, **kwargs: Any) -> YoloV5MediumModel:
+    return YoloV5Medium(
+        name="YoloV5Medium",
+        model=await load_dvc("models/yolov5m_int8.onnx"),
+        format=Format.ONNX,
+        family="Yolo",
+        version="v5",
+        metadata=Metadata(
+            description="Yolo v5 medium model",
             publication=Publication(url="https://github.com/ultralytics/yolov5"),
         ),
         compiler_config={
