@@ -8,7 +8,7 @@ from furiosa.registry import Model
 from .base import YoloV5Model, compute_stride
 from .box_decode.box_decoder import BoxDecoderC
 
-with open(pathlib.Path(__file__).parent / "datasets/yolov5l/cfg.yaml", "r") as f:
+with open(pathlib.Path(__file__).parent / "datasets/yolov5m/cfg.yaml", "r") as f:
     cfg = yaml.safe_load(f)
     ANCHORS = np.float32(cfg["anchors"])
     CLASS_NAMES = cfg["class_names"]
@@ -21,7 +21,7 @@ BOX_DECODER = BoxDecoderC(
 )
 
 
-class YoloV5LargeModel(Model, YoloV5Model):
+class YoloV5MediumModel(Model, YoloV5Model):
     def get_class_names(self):
         return CLASS_NAMES
 
